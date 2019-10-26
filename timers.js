@@ -9,9 +9,9 @@ Contains 1 minute button,
 and the Display of the Timer.
 
 In constructor, .bind() is to keep the value of 'this' in the function 
-be TimerDisplay object instead of undefined or window.
+be MeditationTimer object instead of undefined or window.
 */
-class TimerDisplay extends React.Component {
+class MeditationTimer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
@@ -96,19 +96,11 @@ class TimerDisplay extends React.Component {
 	render() {
 		return (
 			<div>
-				<button onClick={this.startOneMinTimer}>
-					1 min
-				</button>
-				<br/>
-				<button onClick={this.startFiveMinTimer}>
-					5 min
-				</button>
-				<br/>
+				<TimerStart time="1" />
+				<TimerStart time="5" />
+				
 				<span>
-					<button onClick={this.startThirtyMinTimer}>
-						30 min
-					</button>
-					
+					<TimerStart time="30" />					
 					{this.state.timerString}
 				</span>
 				<br/>
@@ -120,6 +112,9 @@ class TimerDisplay extends React.Component {
 	}
 }
 
+/*
+TimerStart is a button to set a timer.
+*/
 class TimerStart extends React.Component {
 	constructor(props) {
 		super(props);
@@ -140,8 +135,8 @@ class TimerStart extends React.Component {
 //const domContainer3 = document.querySelector('#root');
 //ReactDOM.render(e(TimerStart), domContainer3);
 ReactDOM.render(
-	<div><TimerStart time="5" />
-	<TimerStart time="7" />
+	<div>
+	<MeditationTimer />
 	</div>,
 	document.getElementById('root')
 );
