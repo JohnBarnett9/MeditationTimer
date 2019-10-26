@@ -35,6 +35,11 @@ class MeditationTimer extends React.Component {
 		//we will use the dataFromChild here
 		console.log("dataFromChild=");
 		console.dir(dataFromChild);
+		console.log("this=");
+		console.dir(this);
+		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
+		let intervalId = setInterval(this.timer, 1000);
+		this.setState({intervalId: intervalId });
 	}
 	
 	/*
