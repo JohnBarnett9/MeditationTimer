@@ -20,7 +20,8 @@ class MeditationTimer extends React.Component {
 			seconds: 0, //not needed?
 			started: false, //not needed?
 			intervalId: 0, //to exit setInterval()
-			totalSeconds: 0 //different amount depending on which button clicked
+			totalSeconds: 0, //different amount depending on which button clicked
+			isRunning: true //true if running, false if paused
 		};
 		
 		this.startOneMinTimer = this.startOneMinTimer.bind(this);
@@ -47,28 +48,30 @@ class MeditationTimer extends React.Component {
 	Math.floor() is needed to handle case of 0 minutes.
 	*/
 	timer() {
-		if (this.state.totalSeconds === 0) {
-			clearInterval(this.state.intervalId);
-		}
+		if (this.state.isRunning === true) { //if not paused
+			if (this.state.totalSeconds === 0) {
+				clearInterval(this.state.intervalId);
+			}
 
-		let minutes = Math.floor(this.state.totalSeconds / 60);
-		
-		//handle case of leading 0
-		if (minutes < 10) {
-			minutes = "0" + minutes;
+			let minutes = Math.floor(this.state.totalSeconds / 60);
+			
+			//handle case of leading 0
+			if (minutes < 10) {
+				minutes = "0" + minutes;
+			}
+			
+			let seconds = this.state.totalSeconds % 60;
+			
+			//handle case of leading 0
+			if (seconds < 10) {
+				seconds = "0" + seconds;
+			}
+			
+			let display = minutes + ":" + seconds;
+			console.log("display = " + display);
+			this.setState({ timerString: minutes + ":" + seconds });
+			this.state.totalSeconds = this.state.totalSeconds - 1;
 		}
-		
-		let seconds = this.state.totalSeconds % 60;
-		
-		//handle case of leading 0
-		if (seconds < 10) {
-			seconds = "0" + seconds;
-		}
-		
-		let display = minutes + ":" + seconds;
-		console.log("display = " + display);
-		this.setState({ timerString: minutes + ":" + seconds });
-		this.state.totalSeconds = this.state.totalSeconds - 1;	
 	}
 
 	/*
@@ -101,6 +104,11 @@ class MeditationTimer extends React.Component {
 	*/
 	playPause(){
 		console.log("in play pause");
+		if (this.state.isRunning === true) {
+			this.state.isRunning = false;
+		} else {
+			this.state.isRunning = true;
+		}
 	}
 	
 	reset(){
@@ -114,6 +122,7 @@ class MeditationTimer extends React.Component {
 	render() {
 		return (
 			<div>
+				<TimerButton time=".1" callbackFromParent={this.myCallback}/>
 				<TimerButton time="1" callbackFromParent={this.myCallback}/>
 				<TimerButton time="5" callbackFromParent={this.myCallback}/>
 				
