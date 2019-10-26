@@ -96,11 +96,11 @@ class MeditationTimer extends React.Component {
 	render() {
 		return (
 			<div>
-				<TimerStart time="1" />
-				<TimerStart time="5" />
+				<TimerButton time="1" />
+				<TimerButton time="5" />
 				
 				<span>
-					<TimerStart time="30" />					
+					<TimerButton time="30" />					
 					{this.state.timerString}
 				</span>
 				<br/>
@@ -115,7 +115,7 @@ class MeditationTimer extends React.Component {
 /*
 TimerStart is a button to set a timer.
 */
-class TimerStart extends React.Component {
+class TimerButton extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
