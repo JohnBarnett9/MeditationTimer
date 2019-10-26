@@ -28,6 +28,7 @@ class MeditationTimer extends React.Component {
 		this.startThirtyMinTimer = this.startThirtyMinTimer.bind(this);
 		this.playPause = this.playPause.bind(this);
 		this.timer = this.timer.bind(this);
+		this.reset = this.reset.bind(this);
 	}
 	
 	/*
@@ -88,6 +89,10 @@ class MeditationTimer extends React.Component {
 	playPause(){
 		console.log("in play pause");
 	}
+	
+	reset(){
+		console.log("in reset");
+	}
 
 	/*
 	Renders the 1 minute button and the display of the timer.
@@ -107,6 +112,9 @@ class MeditationTimer extends React.Component {
 				<button onClick={this.playPause}>
 					Play/Pause
 				</button>
+				<button onClick={this.reset}>
+					Reset
+				</button>
 			</div>
 		);
 	}
@@ -125,7 +133,7 @@ class TimerButton extends React.Component {
 	render () {
 		return (
 			<div>
-				<button>asdf {this.props.time}</button>
+				<button>{this.props.time} Min</button>
 			</div>
 		);
 	}
