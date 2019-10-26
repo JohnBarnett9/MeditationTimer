@@ -31,6 +31,12 @@ class MeditationTimer extends React.Component {
 		this.reset = this.reset.bind(this);
 	}
 	
+	myCallback = (dataFromChild) => {
+		//we will use the dataFromChild here
+		console.log("dataFromChild=");
+		console.dir(dataFromChild);
+	}
+	
 	/*
 	Given totalSeconds to count down from, countdown to 0 and update the display value.
 	Math.floor() is needed to handle case of 0 minutes.
@@ -55,6 +61,7 @@ class MeditationTimer extends React.Component {
 		}
 		
 		let display = minutes + ":" + seconds;
+		console.log("display = " + display);
 		this.setState({ timerString: minutes + ":" + seconds });
 		this.state.totalSeconds = this.state.totalSeconds - 1;	
 	}
@@ -82,6 +89,7 @@ class MeditationTimer extends React.Component {
 		this.setState({ intervalId: intervalId });
 	}
 	
+	
 	/*
 	If timer is counting down, pauses timer.
 	If timer is paused, continues timer counting down.
@@ -101,11 +109,11 @@ class MeditationTimer extends React.Component {
 	render() {
 		return (
 			<div>
-				<TimerButton time="1" />
-				<TimerButton time="5" />
+				<TimerButton time="1" callbackFromParent={this.myCallback}/>
+				<TimerButton time="5" callbackFromParent={this.myCallback}/>
 				
 				<span>
-					<TimerButton time="30" />					
+					<TimerButton time="30" callbackFromParent={this.myCallback}/>					
 					{this.state.timerString}
 				</span>
 				<br/>
@@ -127,13 +135,21 @@ class TimerButton extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
+		this.runTimer = this.runTimer.bind(this);
+	}
+	
+	runTimer(event){
+		console.log("event=");
+		console.dir(event.target);
+		//this.props.callbackFromParent(9);
+		this.props.callbackFromParent(this.props.time);
 	}
 
 	//{ this.props.numberOfSeconds }
 	render () {
 		return (
 			<div>
-				<button>{this.props.time} Min</button>
+				<button onClick={this.runTimer}>{this.props.time} Min</button>
 			</div>
 		);
 	}
