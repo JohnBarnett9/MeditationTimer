@@ -31,6 +31,7 @@ class MeditationTimer extends React.Component {
 		this.playPause = this.playPause.bind(this);
 		this.timer = this.timer.bind(this);
 		this.reset = this.reset.bind(this);
+		this.convertTotalSecondsToTimerString = this.convertTotalSecondsToTimerString.bind(this);
 	}
 	
 	myCallback = (dataFromChild) => {
@@ -57,6 +58,9 @@ class MeditationTimer extends React.Component {
 				clearInterval(this.state.intervalId);
 			}
 
+			this.convertTotalSecondsToTimerString(this.state.totalSeconds);
+
+			/*
 			let minutes = Math.floor(this.state.totalSeconds / 60);
 			
 			//handle case of leading 0
@@ -74,6 +78,7 @@ class MeditationTimer extends React.Component {
 			let display = minutes + ":" + seconds;
 			console.log("display = " + display);
 			this.setState({ timerString: minutes + ":" + seconds });
+			*/
 			this.state.totalSeconds = this.state.totalSeconds - 1;
 		}
 	}
@@ -128,16 +133,24 @@ class MeditationTimer extends React.Component {
 		clearInterval(this.state.intervalId);
 		
 		//load amount from backup
-		this.state.totalSeconds = this.state.totalSecondsForReset;
+		this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
+	}
 
-		let minutes = Math.floor(this.state.totalSeconds / 60);
+	
+	/*
+	input is an amount of seconds.
+	output is the input has been converted to the format of the 
+	timerString "00:00".
+	*/
+	convertTotalSecondsToTimerString(amountOfSeconds){
+		let minutes = Math.floor(amountOfSeconds / 60);
 		
 		//handle case of leading 0
 		if (minutes < 10) {
 			minutes = "0" + minutes;
 		}
 		
-		let seconds = this.state.totalSeconds % 60;
+		let seconds = amountOfSeconds % 60;
 		
 		//handle case of leading 0
 		if (seconds < 10) {
@@ -148,7 +161,9 @@ class MeditationTimer extends React.Component {
 		console.log("display = " + display);
 		this.setState({ timerString: minutes + ":" + seconds });
 	}
-
+	
+	
+	
 	/*
 	Renders the 1 minute button and the display of the timer.
 	Need closing <br/>, <br> will not work.
