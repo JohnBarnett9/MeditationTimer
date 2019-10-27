@@ -21,6 +21,7 @@ class MeditationTimer extends React.Component {
 			started: false, //not needed?
 			intervalId: 0, //to exit setInterval()
 			totalSeconds: 0, //different amount depending on which button clicked
+			totalSecondesForReset: 0,
 			isRunning: true //true if running, false if paused
 		};
 		
@@ -41,6 +42,9 @@ class MeditationTimer extends React.Component {
 		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
 		let intervalId = setInterval(this.timer, 1000);
 		this.setState({intervalId: intervalId });
+		
+		//if reset is clicked, need a backup of the original amount of seconds
+		this.state.totalSecondsForReset = this.state.totalSeconds;
 	}
 	
 	/*
@@ -111,8 +115,38 @@ class MeditationTimer extends React.Component {
 		}
 	}
 	
+	/*
+	When reset button is clicked while timer 
+	is counting down or while timer is paused,
+	timer is set back to original time and does not count down.
+	If the reset button is clicked with timer is 00:00,
+	the timer stays at 00:00.
+	If the reset button is clicked any other time, nothing happens.
+	*/
 	reset(){
 		console.log("in reset");
+		clearInterval(this.state.intervalId);
+		
+		//load amount from backup
+		this.state.totalSeconds = this.state.totalSecondsForReset;
+
+		let minutes = Math.floor(this.state.totalSeconds / 60);
+		
+		//handle case of leading 0
+		if (minutes < 10) {
+			minutes = "0" + minutes;
+		}
+		
+		let seconds = this.state.totalSeconds % 60;
+		
+		//handle case of leading 0
+		if (seconds < 10) {
+			seconds = "0" + seconds;
+		}
+		
+		let display = minutes + ":" + seconds;
+		console.log("display = " + display);
+		this.setState({ timerString: minutes + ":" + seconds });
 	}
 
 	/*
