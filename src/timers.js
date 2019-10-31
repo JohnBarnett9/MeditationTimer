@@ -183,20 +183,26 @@ class MeditationTimer extends React.Component {
 	render() {
 		return (
 			<div>
-				<TimerButton time=".1" callbackFromParent={this.myCallback}/>
-				<TimerButton time="1" callbackFromParent={this.myCallback}/>
-				<TimerButton time="5" callbackFromParent={this.myCallback}/>					
-				<span>
-					<TimerButton time="30" callbackFromParent={this.myCallback}/>					
-					{this.state.timerString}
-				</span>
-				<br/>
-				<button onClick={this.playPause}>
-					Play/Pause
-				</button>
-				<button onClick={this.reset}>
-					Reset
-				</button>
+				<Grid fluid>
+					<Row>
+						<Col>
+							<TimerButton time=".1" callbackFromParent={this.myCallback}/>
+							<TimerButton time="1" callbackFromParent={this.myCallback}/>
+							<TimerButton time="5" callbackFromParent={this.myCallback}/>					
+							<TimerButton time="30" callbackFromParent={this.myCallback}/>												
+						</Col>
+						<Col>
+							{this.state.timerString}
+							<br/>
+							<button onClick={this.playPause}>
+								Play/Pause
+							</button>
+							<button onClick={this.reset}>
+								Reset
+							</button>
+						</Col>
+					</Row>
+				</Grid>
 			</div>
 		);
 	}
