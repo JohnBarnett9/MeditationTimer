@@ -1,0 +1,244 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import { Grid, Row, Col } from 'react-flexbox-grid';
+
+'use strict';
+
+const e = React.createElement;
+
+/*
+Contains 1 minute button,
+5 minute button,
+30 minute button,
+and the Display of the Timer.
+
+In constructor, .bind() is to keep the value of 'this' in the function 
+be MeditationTimer object instead of undefined or window.
+*/
+class MeditationTimer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { 
+			timerString: "00:00",
+			minutes: 0, //not needed?
+			seconds: 0, //not needed?
+			started: false, //not needed?
+			intervalId: 0, //to exit setInterval()
+			totalSeconds: 0, //different amount depending on which button clicked
+			totalSecondesForReset: 0,
+			isRunning: true //true if running, false if paused
+		};
+		
+		this.startOneMinTimer = this.startOneMinTimer.bind(this);
+		this.startFiveMinTimer = this.startFiveMinTimer.bind(this);
+		this.startThirtyMinTimer = this.startThirtyMinTimer.bind(this);
+		this.playPause = this.playPause.bind(this);
+		this.timer = this.timer.bind(this);
+		this.reset = this.reset.bind(this);
+		this.convertTotalSecondsToTimerString = this.convertTotalSecondsToTimerString.bind(this);
+		
+		/*
+		webpack kept giving errors about myCallback() function 
+		when using ES6 syntax, trying to solve that error with 
+		.bind() and myCallback(dataFromChild)
+		*/
+		//this.myCallback = this.myCallback.bind(this);
+	}
+	
+	//myCallback(dataFromChild){
+	myCallback = (dataFromChild) => {
+		//we will use the dataFromChild here
+		console.log("dataFromChild=");
+		console.dir(dataFromChild);
+		console.log("this=");
+		console.dir(this);
+		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
+		let intervalId = setInterval(this.timer, 1000);
+		this.setState({intervalId: intervalId });
+		
+		//if reset is clicked, need a backup of the original amount of seconds
+		this.state.totalSecondsForReset = this.state.totalSeconds;
+	}
+	
+	/*
+	Given totalSeconds to count down from, countdown to 0 and update the display value.
+	Math.floor() is needed to handle case of 0 minutes.
+	*/
+	timer() {
+		if (this.state.isRunning === true) { //if not paused
+			if (this.state.totalSeconds === 0) {
+				clearInterval(this.state.intervalId);
+			}
+
+			this.convertTotalSecondsToTimerString(this.state.totalSeconds);
+
+			/*
+			let minutes = Math.floor(this.state.totalSeconds / 60);
+			
+			//handle case of leading 0
+			if (minutes < 10) {
+				minutes = "0" + minutes;
+			}
+			
+			let seconds = this.state.totalSeconds % 60;
+			
+			//handle case of leading 0
+			if (seconds < 10) {
+				seconds = "0" + seconds;
+			}
+			
+			let display = minutes + ":" + seconds;
+			console.log("display = " + display);
+			this.setState({ timerString: minutes + ":" + seconds });
+			*/
+			this.state.totalSeconds = this.state.totalSeconds - 1;
+		}
+	}
+
+	/*
+	sets timer to countdown from 1 minute
+	intervalId is stored because the setInterval needs to be exited when
+	the timer has reached 0
+	*/
+	startOneMinTimer(e){
+		this.state.totalSeconds = 5;
+		let intervalId = setInterval(this.timer, 1000);
+		this.setState({intervalId: intervalId });
+	}
+	
+	startFiveMinTimer(){
+		this.state.totalSeconds = 7;
+		let intervalId = setInterval(this.timer, 1000);
+		this.setState({ intervalId: intervalId });
+	}
+	
+	startThirtyMinTimer(){
+		this.state.totalSeconds = 9;
+		let intervalId = setInterval(this.timer, 1000);
+		this.setState({ intervalId: intervalId });
+	}
+	
+	
+	/*
+	If timer is counting down, pauses timer.
+	If timer is paused, continues timer counting down.
+	*/
+	playPause(){
+		console.log("in play pause");
+		if (this.state.isRunning === true) {
+			this.state.isRunning = false;
+		} else {
+			this.state.isRunning = true;
+		}
+	}
+	
+	/*
+	When reset button is clicked while timer 
+	is counting down or while timer is paused,
+	timer is set back to original time and does not count down.
+	If the reset button is clicked with timer is 00:00,
+	the timer stays at 00:00.
+	If the reset button is clicked any other time, nothing happens.
+	*/
+	reset(){
+		console.log("in reset");
+		clearInterval(this.state.intervalId);
+		
+		//load amount from backup
+		this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
+	}
+
+	
+	/*
+	input is an amount of seconds.
+	output is the input has been converted to the format of the 
+	timerString "00:00".
+	*/
+	convertTotalSecondsToTimerString(amountOfSeconds){
+		let minutes = Math.floor(amountOfSeconds / 60);
+		
+		//handle case of leading 0
+		if (minutes < 10) {
+			minutes = "0" + minutes;
+		}
+		
+		let seconds = amountOfSeconds % 60;
+		
+		//handle case of leading 0
+		if (seconds < 10) {
+			seconds = "0" + seconds;
+		}
+		
+		let display = minutes + ":" + seconds;
+		console.log("display = " + display);
+		this.setState({ timerString: minutes + ":" + seconds });
+	}
+	
+	
+	
+	/*
+	Renders the 1 minute button and the display of the timer.
+	Need closing <br/>, <br> will not work.
+	*/
+	render() {
+		return (
+			<div>
+				<TimerButton time=".1" callbackFromParent={this.myCallback}/>
+				<TimerButton time="1" callbackFromParent={this.myCallback}/>
+				<TimerButton time="5" callbackFromParent={this.myCallback}/>					
+				<span>
+					<TimerButton time="30" callbackFromParent={this.myCallback}/>					
+					{this.state.timerString}
+				</span>
+				<br/>
+				<button onClick={this.playPause}>
+					Play/Pause
+				</button>
+				<button onClick={this.reset}>
+					Reset
+				</button>
+			</div>
+		);
+	}
+}
+
+/*
+TimerStart is a button to set a timer.
+*/
+class TimerButton extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {};
+		this.runTimer = this.runTimer.bind(this);
+	}
+	
+	runTimer(event){
+		console.log("event=");
+		console.dir(event.target);
+		//this.props.callbackFromParent(9);
+		this.props.callbackFromParent(this.props.time);
+	}
+
+	//{ this.props.numberOfSeconds }
+	render () {
+		return (
+			<div>
+				<button onClick={this.runTimer}>{this.props.time} Min</button>
+			</div>
+		);
+	}
+}
+
+// ... the starter code you pasted ...
+//const domContainer3 = document.querySelector('#root');
+//ReactDOM.render(e(TimerStart), domContainer3);
+ReactDOM.render(
+	<div>
+	<MeditationTimer />
+	</div>,
+	document.getElementById('root')
+);
+
+
+
+
