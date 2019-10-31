@@ -1,1 +1,3 @@
 readme.txt
+*.bundle.js
+node_modules
