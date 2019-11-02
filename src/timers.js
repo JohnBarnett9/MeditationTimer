@@ -179,19 +179,22 @@ class MeditationTimer extends React.Component {
 	/*
 	Renders the 1 minute button and the display of the timer.
 	Need closing <br/>, <br> will not work.
+	xs=3, left column takes up 3 of 12 columns
+	xs=9, right column takes up 9 of 12 columns
+	xs, sm, md, lg are the 4 possible screen sizes
 	*/
 	render() {
 		return (
 			<div>
 				<Grid fluid>
 					<Row>
-						<Col>
+						<Col xs={3} sm={3} md={3} lg={3}>
 							<TimerButton time=".1" callbackFromParent={this.myCallback}/>
 							<TimerButton time="1" callbackFromParent={this.myCallback}/>
 							<TimerButton time="5" callbackFromParent={this.myCallback}/>					
 							<TimerButton time="30" callbackFromParent={this.myCallback}/>												
 						</Col>
-						<Col>
+						<Col xs={9} sm={9} md={9} lg={9}>
 							{this.state.timerString}
 							<br/>
 							<button onClick={this.playPause}>
@@ -227,9 +230,26 @@ class TimerButton extends React.Component {
 
 	//{ this.props.numberOfSeconds }
 	render () {
+		const tButton = {
+			boxShadow: "0px 0px 0px 2px #9fb4f2",
+			//background:linearGradient("to bottom", "#7892c2 5%", "#476e9e 100%"),
+			backgroundColor:"#7892c2",
+			borderRadius:"15px",
+			border:"1px solid #4e6096",
+			display:"inline-block",
+			cursor:"pointer",
+			color:"#ffffff",
+			fontFamily:"Arial",
+			fontSize:"19px",
+			padding:"12px 37px",
+			textDecoration:"none",
+			textShadow:"0px 1px 0px #283966",
+			
+			margin: "10px 10px 10px 10px"
+		};
 		return (
 			<div>
-				<button onClick={this.runTimer}>{this.props.time} Min</button>
+				<button onClick={this.runTimer} style={tButton}>{this.props.time} Min</button>
 			</div>
 		);
 	}
