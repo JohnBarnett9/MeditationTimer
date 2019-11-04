@@ -225,6 +225,9 @@ class MeditationTimer extends React.Component {
 	xs, sm, md, lg are the 4 possible screen sizes
 	*/
 	render() {
+		const displayStyle = {
+			fontSize: "100px"
+		};
 		return (
 			<div class="container">
 				<Row>
@@ -235,7 +238,7 @@ class MeditationTimer extends React.Component {
 							<TimerButton time="30" callbackFromParent={this.myCallback}/>												
 					</Col>
 					<Col>
-							{this.state.timerString}
+							<span style={displayStyle}>{this.state.timerString}</span>
 							<br/>
 							<button onClick={this.playPause}>
 								Play/Pause
@@ -288,7 +291,7 @@ class TimerButton extends React.Component {
 		};
 		return (
 			<div>
-				<button onClick={this.runTimer}>{this.props.time} Min</button>
+				<Button variant="primary" size="lg" onClick={this.runTimer}>{this.props.time} Min</Button>
 			</div>
 		);
 	}
