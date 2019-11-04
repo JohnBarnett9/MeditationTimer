@@ -1,6 +1,47 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Grid, Row, Col } from 'react-flexbox-grid';
+/*
+ERROR in ./node_modules/bootstrap/dist/css/bootstrap.min.css 6:3
+Module parse failed: Unexpected token (6:3)
+You may need an appropriate loader to handle this file type, currently no loader
+s are configured to process this file. See https://webpack.js.org/concepts#loade
+rs
+
+*/
+//import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap';
+
+/*
+WARNING in ./src/timers.js 324:66-72
+"export 'Button' was not found in 'react-bootstrap/Button'
+*/
+//import { Button } from 'react-bootstrap/Button';
+
+
+import Button from 'react-bootstrap/Button';
+import { Row, Col, Grid } from 'react-bootstrap';
+
+//using cdn instead
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
+/*
+ERROR in ./src/timers.js
+Module not found: Error: Can't resolve 'bootstrap/css/bootstrap.css' in 'C:\www\
+John\React\MeditationTimer\src'
+ @ ./src/timers.js 40:0-38
+npm ERR! code ELIFECYCLE
+npm ERR! errno 2
+*/
+//require('bootstrap/css/bootstrap.css');
+
+/*
+https://medium.com/@victorleungtw/how-to-use-webpack-with-react-and-bootstrap-b94d33765970
+import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
+*/
+
+
+
+
 
 'use strict';
 
@@ -185,16 +226,15 @@ class MeditationTimer extends React.Component {
 	*/
 	render() {
 		return (
-			<div>
-				<Grid fluid>
-					<Row>
-						<Col xs={3} sm={3} md={3} lg={3}>
+			<div class="container">
+				<Row>
+					<Col>
 							<TimerButton time=".1" callbackFromParent={this.myCallback}/>
 							<TimerButton time="1" callbackFromParent={this.myCallback}/>
 							<TimerButton time="5" callbackFromParent={this.myCallback}/>					
 							<TimerButton time="30" callbackFromParent={this.myCallback}/>												
-						</Col>
-						<Col xs={9} sm={9} md={9} lg={9}>
+					</Col>
+					<Col>
 							{this.state.timerString}
 							<br/>
 							<button onClick={this.playPause}>
@@ -203,9 +243,8 @@ class MeditationTimer extends React.Component {
 							<button onClick={this.reset}>
 								Reset
 							</button>
-						</Col>
-					</Row>
-				</Grid>
+					</Col>
+				</Row>
 			</div>
 		);
 	}
@@ -249,7 +288,7 @@ class TimerButton extends React.Component {
 		};
 		return (
 			<div>
-				<button onClick={this.runTimer} style={tButton}>{this.props.time} Min</button>
+				<button onClick={this.runTimer}>{this.props.time} Min</button>
 			</div>
 		);
 	}
