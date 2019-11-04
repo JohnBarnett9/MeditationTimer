@@ -240,12 +240,12 @@ class MeditationTimer extends React.Component {
 					<Col>
 							<span style={displayStyle}>{this.state.timerString}</span>
 							<br/>
-							<button onClick={this.playPause}>
+							<Button variant="success" onClick={this.playPause}>
 								Play/Pause
-							</button>
-							<button onClick={this.reset}>
+							</Button>
+							<Button variant="danger" onClick={this.reset}>
 								Reset
-							</button>
+							</Button>
 					</Col>
 				</Row>
 			</div>
