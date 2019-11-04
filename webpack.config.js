@@ -20,9 +20,9 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				loader: 'style-loader!css-loader',
-				include: /flexboxgrid/
+				use: ['style-loader', 'css-loader']
 			}
+			
 		]
 	}
 };
