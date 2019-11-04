@@ -109,6 +109,7 @@ class MeditationTimer extends React.Component {
 	timer() {
 		if (this.state.isRunning === true) { //if not paused
 			if (this.state.totalSeconds === 0) {
+				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
 			}
 
@@ -224,11 +225,20 @@ class MeditationTimer extends React.Component {
 	xs=3, left column takes up 3 of 12 columns
 	xs=9, right column takes up 9 of 12 columns
 	xs, sm, md, lg are the 4 possible screen sizes
+	
+	With red, the totalSeconds === 0 is to detect when the
+	timer has reached 0.
+	The isRunning === false is to make the background red only
+	when the timer has reached 0, and not when the display is 0
+	before any timers have been started.
 	*/
 	render() {
-		const displayStyle = {
+		let displayStyle = {
 			fontSize: "100px"
 		};
+		if (this.state.totalSeconds === 0 && this.state.isRunning === false) {
+			displayStyle.backgroundColor = "red";
+		}
 		return (
 			<div class="container">
 				<Row>
