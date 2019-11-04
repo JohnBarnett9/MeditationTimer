@@ -19,6 +19,7 @@ WARNING in ./src/timers.js 324:66-72
 
 
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Row, Col, Grid } from 'react-bootstrap';
 
 //using cdn instead
@@ -232,20 +233,20 @@ class MeditationTimer extends React.Component {
 			<div class="container">
 				<Row>
 					<Col>
-							<TimerButton time=".1" callbackFromParent={this.myCallback}/>
-							<TimerButton time="1" callbackFromParent={this.myCallback}/>
-							<TimerButton time="5" callbackFromParent={this.myCallback}/>					
-							<TimerButton time="30" callbackFromParent={this.myCallback}/>												
+						<TimerButton time=".1" callbackFromParent={this.myCallback}/>
+						<TimerButton time="1" callbackFromParent={this.myCallback}/>
+						<TimerButton time="5" callbackFromParent={this.myCallback}/>
+						<TimerButton time="30" callbackFromParent={this.myCallback}/>
 					</Col>
 					<Col>
-							<span style={displayStyle}>{this.state.timerString}</span>
-							<br/>
-							<Button variant="success" onClick={this.playPause}>
-								Play/Pause
-							</Button>
-							<Button variant="danger" onClick={this.reset}>
-								Reset
-							</Button>
+						<span style={displayStyle}>{this.state.timerString}</span>
+						<br/>
+						<Button variant="success" onClick={this.playPause}>
+							Play/Pause
+						</Button>
+						<Button variant="danger" onClick={this.reset}>
+							Reset
+						</Button>
 					</Col>
 				</Row>
 			</div>
@@ -272,26 +273,12 @@ class TimerButton extends React.Component {
 
 	//{ this.props.numberOfSeconds }
 	render () {
-		const tButton = {
-			boxShadow: "0px 0px 0px 2px #9fb4f2",
-			//background:linearGradient("to bottom", "#7892c2 5%", "#476e9e 100%"),
-			backgroundColor:"#7892c2",
-			borderRadius:"15px",
-			border:"1px solid #4e6096",
-			display:"inline-block",
-			cursor:"pointer",
-			color:"#ffffff",
-			fontFamily:"Arial",
-			fontSize:"19px",
-			padding:"12px 37px",
-			textDecoration:"none",
-			textShadow:"0px 1px 0px #283966",
-			
-			margin: "10px 10px 10px 10px"
+		const buttonWidth = {
+			width: "100px"
 		};
 		return (
 			<div>
-				<Button variant="primary" size="lg" onClick={this.runTimer}>{this.props.time} Min</Button>
+				<Button variant="primary" style={buttonWidth} onClick={this.runTimer}>{this.props.time} Min</Button>
 			</div>
 		);
 	}
