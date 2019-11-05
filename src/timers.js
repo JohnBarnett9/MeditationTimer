@@ -109,14 +109,16 @@ class MeditationTimer extends React.Component {
 	Math.floor() is needed to handle case of 0 minutes.
 	totalSeconds - 1 happens before convertTotalSecondsToTimerString()
 	because solves problem of: click 1 Min, 6:00 appears 2 seconds before counting down.
+	totalSeconds - 1 happens before === 0 because prevents display from being negative.
 	*/
 	timer() {
 		if (this.state.isRunning === true) { //if not paused
+			this.state.totalSeconds = this.state.totalSeconds - 1;
 			if (this.state.totalSeconds === 0) {
 				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
 			}
-			this.state.totalSeconds = this.state.totalSeconds - 1;
+			
 			this.convertTotalSecondsToTimerString(this.state.totalSeconds);
 
 			/*
