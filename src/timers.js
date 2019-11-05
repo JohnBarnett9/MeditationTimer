@@ -287,11 +287,15 @@ class TimerButton extends React.Component {
 		this.props.callbackFromParent(this.props.time);
 	}
 
-	//{ this.props.numberOfSeconds }
-	//primary mb-2 mt-2, primary means blue, 2 means margin top and bottom
+	/*
+	{ this.props.numberOfSeconds }
+	primary mb-2 mt-2, primary means blue, 2 means margin top and bottom
+	marginLeft is to have same whitespace distance on both sides of display.
+	*/
 	render () {
 		const buttonWidth = {
-			width: "100px"
+			width: "100px",
+			marginLeft: "210px"
 		};
 		return (
 			<div>
