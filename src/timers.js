@@ -96,6 +96,8 @@ class MeditationTimer extends React.Component {
 		console.dir(this);
 		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
 		let intervalId = setInterval(this.timer, 1000);
+		//1 min clicked, display initialized immediately
+		this.convertTotalSecondsToTimerString(this.state.totalSeconds);
 		this.setState({intervalId: intervalId });
 		
 		//if reset is clicked, need a backup of the original amount of seconds
@@ -105,6 +107,8 @@ class MeditationTimer extends React.Component {
 	/*
 	Given totalSeconds to count down from, countdown to 0 and update the display value.
 	Math.floor() is needed to handle case of 0 minutes.
+	totalSeconds - 1 happens before convertTotalSecondsToTimerString()
+	because solves problem of: click 1 Min, 6:00 appears 2 seconds before counting down.
 	*/
 	timer() {
 		if (this.state.isRunning === true) { //if not paused
@@ -112,7 +116,7 @@ class MeditationTimer extends React.Component {
 				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
 			}
-
+			this.state.totalSeconds = this.state.totalSeconds - 1;
 			this.convertTotalSecondsToTimerString(this.state.totalSeconds);
 
 			/*
@@ -134,7 +138,7 @@ class MeditationTimer extends React.Component {
 			console.log("display = " + display);
 			this.setState({ timerString: minutes + ":" + seconds });
 			*/
-			this.state.totalSeconds = this.state.totalSeconds - 1;
+			
 		}
 	}
 
