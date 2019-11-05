@@ -1,48 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-/*
-ERROR in ./node_modules/bootstrap/dist/css/bootstrap.min.css 6:3
-Module parse failed: Unexpected token (6:3)
-You may need an appropriate loader to handle this file type, currently no loader
-s are configured to process this file. See https://webpack.js.org/concepts#loade
-rs
-
-*/
-//import 'bootstrap/dist/css/bootstrap.min.css';
-//import 'bootstrap';
-
-/*
-WARNING in ./src/timers.js 324:66-72
-"export 'Button' was not found in 'react-bootstrap/Button'
-*/
-//import { Button } from 'react-bootstrap/Button';
-
 
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Row, Col, Grid } from 'react-bootstrap';
-
-//using cdn instead
-//import 'bootstrap/dist/css/bootstrap.min.css';
-
-/*
-ERROR in ./src/timers.js
-Module not found: Error: Can't resolve 'bootstrap/css/bootstrap.css' in 'C:\www\
-John\React\MeditationTimer\src'
- @ ./src/timers.js 40:0-38
-npm ERR! code ELIFECYCLE
-npm ERR! errno 2
-*/
-//require('bootstrap/css/bootstrap.css');
-
-/*
-https://medium.com/@victorleungtw/how-to-use-webpack-with-react-and-bootstrap-b94d33765970
-import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
-*/
-
-
-
-
 
 'use strict';
 
@@ -71,29 +32,13 @@ class MeditationTimer extends React.Component {
 			isRunning: true //true if running, false if paused
 		};
 		
-		this.startOneMinTimer = this.startOneMinTimer.bind(this);
-		this.startFiveMinTimer = this.startFiveMinTimer.bind(this);
-		this.startThirtyMinTimer = this.startThirtyMinTimer.bind(this);
 		this.playPause = this.playPause.bind(this);
 		this.timer = this.timer.bind(this);
 		this.reset = this.reset.bind(this);
 		this.convertTotalSecondsToTimerString = this.convertTotalSecondsToTimerString.bind(this);
-		
-		/*
-		webpack kept giving errors about myCallback() function 
-		when using ES6 syntax, trying to solve that error with 
-		.bind() and myCallback(dataFromChild)
-		*/
-		//this.myCallback = this.myCallback.bind(this);
 	}
-	
-	//myCallback(dataFromChild){
+
 	myCallback = (dataFromChild) => {
-		//we will use the dataFromChild here
-		console.log("dataFromChild=");
-		console.dir(dataFromChild);
-		console.log("this=");
-		console.dir(this);
 		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
 		let intervalId = setInterval(this.timer, 1000);
 		//1 min clicked, display initialized immediately
@@ -119,55 +64,10 @@ class MeditationTimer extends React.Component {
 				clearInterval(this.state.intervalId);
 			}
 			
-			this.convertTotalSecondsToTimerString(this.state.totalSeconds);
-
-			/*
-			let minutes = Math.floor(this.state.totalSeconds / 60);
-			
-			//handle case of leading 0
-			if (minutes < 10) {
-				minutes = "0" + minutes;
-			}
-			
-			let seconds = this.state.totalSeconds % 60;
-			
-			//handle case of leading 0
-			if (seconds < 10) {
-				seconds = "0" + seconds;
-			}
-			
-			let display = minutes + ":" + seconds;
-			console.log("display = " + display);
-			this.setState({ timerString: minutes + ":" + seconds });
-			*/
-			
+			this.convertTotalSecondsToTimerString(this.state.totalSeconds);			
 		}
 	}
 
-	/*
-	sets timer to countdown from 1 minute
-	intervalId is stored because the setInterval needs to be exited when
-	the timer has reached 0
-	*/
-	startOneMinTimer(e){
-		this.state.totalSeconds = 5;
-		let intervalId = setInterval(this.timer, 1000);
-		this.setState({intervalId: intervalId });
-	}
-	
-	startFiveMinTimer(){
-		this.state.totalSeconds = 7;
-		let intervalId = setInterval(this.timer, 1000);
-		this.setState({ intervalId: intervalId });
-	}
-	
-	startThirtyMinTimer(){
-		this.state.totalSeconds = 9;
-		let intervalId = setInterval(this.timer, 1000);
-		this.setState({ intervalId: intervalId });
-	}
-	
-	
 	/*
 	If timer is counting down, pauses timer.
 	If timer is paused, continues timer counting down.
@@ -283,7 +183,6 @@ class TimerButton extends React.Component {
 	runTimer(event){
 		console.log("event=");
 		console.dir(event.target);
-		//this.props.callbackFromParent(9);
 		this.props.callbackFromParent(this.props.time);
 	}
 
