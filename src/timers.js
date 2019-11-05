@@ -240,7 +240,7 @@ class MeditationTimer extends React.Component {
 			displayStyle.backgroundColor = "red";
 		}
 		return (
-			<div class="container">
+			<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
 				<Row>
 					<Col>
 						<TimerButton time=".1" callbackFromParent={this.myCallback}/>
@@ -251,10 +251,10 @@ class MeditationTimer extends React.Component {
 					<Col>
 						<span style={displayStyle}>{this.state.timerString}</span>
 						<br/>
-						<Button variant="success" onClick={this.playPause}>
+						<Button variant="success mr-4" onClick={this.playPause}>
 							Play/Pause
 						</Button>
-						<Button variant="danger" onClick={this.reset}>
+						<Button variant="danger ml-4" onClick={this.reset}>
 							Reset
 						</Button>
 					</Col>
@@ -282,13 +282,14 @@ class TimerButton extends React.Component {
 	}
 
 	//{ this.props.numberOfSeconds }
+	//primary mb-2 mt-2, primary means blue, 2 means margin top and bottom
 	render () {
 		const buttonWidth = {
 			width: "100px"
 		};
 		return (
 			<div>
-				<Button variant="primary" style={buttonWidth} onClick={this.runTimer}>{this.props.time} Min</Button>
+				<Button variant="primary mb-2 mt-2" style={buttonWidth} onClick={this.runTimer}>{this.props.time} Min</Button>
 			</div>
 		);
 	}
