@@ -162,7 +162,7 @@ class MeditationTimer extends React.Component {
 	timer has reached 0.
 	The isRunning === false is to make the background red only
 	when the timer has reached 0, and not when the display is 0
-	before any timers have been started.
+	before any timers have been started.	
 	*/
 	render() {
 		return (
@@ -177,10 +177,10 @@ class MeditationTimer extends React.Component {
 					<Col>
 						<span id="displayBackground" className={this.state.displayStyle}>{this.state.timerString}</span>
 						<br/>
-						<Button variant="success ml-4" onClick={this.playPause}>
+						<Button variant="success ml-4 mr-5" onClick={this.playPause}>
 							Play/Pause
 						</Button>
-						<Button variant="danger ml-4" onClick={this.reset}>
+						<Button variant="danger" onClick={this.reset}>
 							Reset
 						</Button>
 					</Col>
