@@ -162,7 +162,11 @@ class MeditationTimer extends React.Component {
 	timer has reached 0.
 	The isRunning === false is to make the background red only
 	when the timer has reached 0, and not when the display is 0
-	before any timers have been started.	
+	before any timers have been started.
+
+	ml-4 and mr-5 are both on Play/Pause button.
+	other option:
+	Play/Pause ml-4, Reset mr-5
 	*/
 	render() {
 		return (
