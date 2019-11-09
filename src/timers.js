@@ -32,7 +32,9 @@ class MeditationTimer extends React.Component {
 			totalSeconds: 0, //different amount depending on which button clicked
 			totalSecondesForReset: 0,
 			isRunning: false, //true if running, false if paused
-			displayStyle: "displayStyleW"
+			displayStyle: "displayStyleW",
+			debugFlag: false, //flag determines which style to use
+			debugStyle: "debugVisible"
 
 		};
 		//this.setState({displayStyle :  this.state.displayStyleW});
@@ -169,11 +171,22 @@ class MeditationTimer extends React.Component {
 	Play/Pause ml-4, Reset mr-5
 	*/
 	render() {
+		if (this.state.debugFlag === true) {
+			this.state.debugStyle = "debugVisible";
+			console.log("");
+		} else {
+			this.state.debugStyle = "debugHidden";
+		}
+		
+		const testButtonStyle = {
+
+		};
+		
 		return (
 			<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
 				<Row>
 					<Col>
-						<TimerButton time=".1" callbackFromParent={this.myCallback}/>
+
 						<TimerButton time="1" callbackFromParent={this.myCallback}/>
 						<TimerButton time="5" callbackFromParent={this.myCallback}/>
 						<TimerButton time="30" callbackFromParent={this.myCallback}/>
@@ -187,7 +200,9 @@ class MeditationTimer extends React.Component {
 						<Button variant="danger" onClick={this.reset}>
 							Reset
 						</Button>
+						<TimerButton className="testButton" time=".1" callbackFromParent={this.myCallback}/>
 					</Col>
+					
 				</Row>
 			</div>
 		);
