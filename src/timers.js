@@ -87,6 +87,11 @@ class MeditationTimer extends React.Component {
 				//console.dir(this.state.displayStyle.backgroundColor);
 				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
+				
+				var audio = new Audio("./Zen Buddhist Temple Bell-SoundBible.com-331362457.mp3");
+				for(var i = 0; i < 4; i++){
+					audio.play();
+				}				
 			}
 			
 			this.convertTotalSecondsToTimerString(this.state.totalSeconds);			
