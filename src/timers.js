@@ -31,7 +31,7 @@ class MeditationTimer extends React.Component {
 			intervalId: 0, //to exit setInterval()
 			totalSeconds: 0, //different amount depending on which button clicked
 			totalSecondesForReset: 0,
-			isRunning: true, //true if running, false if paused
+			isRunning: false, //true if running, false if paused
 			displayStyle: "displayStyleW"
 
 		};
@@ -111,16 +111,16 @@ class MeditationTimer extends React.Component {
 	If the reset button is clicked with timer is 00:00,
 	the timer stays at 00:00.
 	If the reset button is clicked any other time, nothing happens.
+	=== true prevents NaN:NaN from appearing when click Reset 
+	when display is 00:00
 	*/
 	reset(){
-		this.state.displayStyle = "displayStyleW";
-		console.log("in reset() this.state.displayStyle = ");
-		console.dir(this.state.displayStyle);
-
-		clearInterval(this.state.intervalId);
-		
-		//load amount from backup
-		this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
+		if (this.state.isRunning === true) {
+			this.state.displayStyle = "displayStyleW";
+			clearInterval(this.state.intervalId);
+			//load amount from backup
+			this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
+		}
 	}
 
 	
