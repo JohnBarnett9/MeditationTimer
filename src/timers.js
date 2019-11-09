@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Row, Col, Grid } from 'react-bootstrap';
 
+import './timers.css';
+
 'use strict';
 
 const e = React.createElement;
@@ -30,21 +32,8 @@ class MeditationTimer extends React.Component {
 			totalSeconds: 0, //different amount depending on which button clicked
 			totalSecondesForReset: 0,
 			isRunning: true, //true if running, false if paused
-			/*
-			displayStyle: {},
-			displayStyleW : {
-				fontSize: "100px",
-				paddingLeft: "15px",
-				paddingRight: "15px",
-				backgroundColor: "white"
-			},
-			displayStyleR : {
-				fontSize: "100px",
-				paddingLeft: "15px",
-				paddingRight: "15px",
-				backgroundColor: "red"
-			}
-			*/
+			displayStyle: "displayStyleW"
+
 		};
 		//this.setState({displayStyle :  this.state.displayStyleW});
 		
@@ -67,6 +56,10 @@ class MeditationTimer extends React.Component {
 			this.state.isRunning = true;
 		//}
 		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
+		
+		//set background style and color of display 
+		this.state.displayStyle = "displayStyleW";
+		
 		let intervalId = setInterval(this.timer, 1000);
 		//1 min clicked, display initialized immediately
 		this.convertTotalSecondsToTimerString(this.state.totalSeconds);
@@ -87,9 +80,9 @@ class MeditationTimer extends React.Component {
 		if (this.state.isRunning === true) { //if not paused
 			this.state.totalSeconds = this.state.totalSeconds - 1;
 			if (this.state.totalSeconds === 0) {
-				this.state.displayStyle = this.state.displayStyleR;
-				console.log("in timer this.state.displayStyle.backgroundColor = ");
-				console.dir(this.state.displayStyle.backgroundColor);
+				this.state.displayStyle = "displayStyleR";
+				//console.log("in timer this.state.displayStyle.backgroundColor = ");
+				//console.dir(this.state.displayStyle.backgroundColor);
 				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
 			}
@@ -120,7 +113,7 @@ class MeditationTimer extends React.Component {
 	If the reset button is clicked any other time, nothing happens.
 	*/
 	reset(){
-		this.state.displayStyle = this.state.displayStyleW;
+		this.state.displayStyle = "displayStyleW";
 		console.log("in reset() this.state.displayStyle = ");
 		console.dir(this.state.displayStyle);
 
@@ -128,9 +121,6 @@ class MeditationTimer extends React.Component {
 		
 		//load amount from backup
 		this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
-		//this.state.displayStyle.backgroundColor = "white";
-		this.forceUpdate();
-		//document.getElementById("#displayBackground").style.backgroundColor ="white";
 	}
 
 	
@@ -175,19 +165,6 @@ class MeditationTimer extends React.Component {
 	before any timers have been started.
 	*/
 	render() {
-		/*let displayStyle = {
-			fontSize: "100px",
-			paddingLeft: "15px",
-			paddingRight: "15px"
-		};
-		*/
-		console.log("in render");
-		if (this.state.totalSeconds === 0 && this.state.isRunning === false) {
-			this.state.displayStyle = this.state.displayStyleR;
-			console.log("in render this.state.displayStyle = ");
-			console.dir(this.state.displayStyle);
-		} 
-		//let tempStyle = this.state.displayStyle;
 		return (
 			<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
 				<Row>
@@ -198,7 +175,7 @@ class MeditationTimer extends React.Component {
 						<TimerButton time="30" callbackFromParent={this.myCallback}/>
 					</Col>
 					<Col>
-						<span id="displayBackground" style={this.state.displayStyle}>{this.state.timerString}</span>
+						<span id="displayBackground" className={this.state.displayStyle}>{this.state.timerString}</span>
 						<br/>
 						<Button variant="success ml-4" onClick={this.playPause}>
 							Play/Pause

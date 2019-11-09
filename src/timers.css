@@ -1,0 +1,13 @@
+.displayStyleW {
+	font-size: 100px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: white;
+}
+
+.displayStyleR {
+	font-size: 100px;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: red;
+}
