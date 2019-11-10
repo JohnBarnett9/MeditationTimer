@@ -15,11 +15,11 @@
 }
 
 .debugVisible {
-	visibility: visible;
+	opacity: 1;
 }
 
 .debugHidden {
-	visibility: hidden;
+	opacity: 0;
 }
 
 .testButton {

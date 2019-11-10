@@ -34,8 +34,7 @@ class MeditationTimer extends React.Component {
 			isRunning: false, //true if running, false if paused
 			displayStyle: "displayStyleW",
 			debugFlag: false, //flag determines which style to use
-			debugStyle: "debugVisible"
-
+			debugStyle: "debugHidden"
 		};
 		//this.setState({displayStyle :  this.state.displayStyleW});
 		
@@ -43,6 +42,7 @@ class MeditationTimer extends React.Component {
 		this.timer = this.timer.bind(this);
 		this.reset = this.reset.bind(this);
 		this.convertTotalSecondsToTimerString = this.convertTotalSecondsToTimerString.bind(this);
+		//this.mouseOut = this.mouseOut.bind(this);
 	}
 
 	
@@ -156,6 +156,12 @@ class MeditationTimer extends React.Component {
 		this.setState({ timerString: minutes + ":" + seconds });
 	}
 	
+	/*
+	mouseOut(){
+		console.log("in mouseOut()");
+		this.setState({debugStyle: "debugVisible"});
+	}
+	*/
 	
 	
 	/*
@@ -175,18 +181,7 @@ class MeditationTimer extends React.Component {
 	other option:
 	Play/Pause ml-4, Reset mr-5
 	*/
-	render() {
-		if (this.state.debugFlag === true) {
-			this.state.debugStyle = "debugVisible";
-			console.log("");
-		} else {
-			this.state.debugStyle = "debugHidden";
-		}
-		
-		const testButtonStyle = {
-
-		};
-		
+	render() {		
 		return (
 			<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
 				<Row>
@@ -205,9 +200,20 @@ class MeditationTimer extends React.Component {
 						<Button variant="danger" onClick={this.reset}>
 							Reset
 						</Button>
-						<TimerButton className="testButton" time=".1" callbackFromParent={this.myCallback}/>
+						
 					</Col>
-					
+					<button 
+					type="button"
+					className={this.state.debugStyle}
+					onMouseOver={() => {
+						console.log("in onMouseOver");
+						this.setState({ debugStyle: "debugVisible"});
+					} }
+					onMouseOut={() => {
+						console.log("in onMouseOut");
+						this.setState({ debugStyle: "debugHidden"});
+					}}
+					>Test</button>
 				</Row>
 			</div>
 		);
