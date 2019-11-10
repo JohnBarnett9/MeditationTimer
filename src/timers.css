@@ -14,11 +14,30 @@
 	background-color: red;
 }
 
+/*
+Test button in bottom right corner of 
+UI, makes button visible.
+*/
 .debugVisible {
+	font-size: 10px;
+	height: 22px;
+	width: 33px;
+	position: absolute;
+	top: 273px;
+	right: 62px;
 	opacity: 1;
 }
 
+/*
+Makes button hidden.
+*/
 .debugHidden {
+	font-size: 10px;
+	height: 22px;
+	width: 33px;
+	position: absolute;
+	top: 273px;
+	right: 62px;	
 	opacity: 0;
 }
 
@@ -35,6 +54,7 @@
 
 .testButton:hover {
 	font-size: 10px;
+	
 	height: 22px;
 	width: 33px;
 	position: absolute;
