@@ -53,6 +53,7 @@ class MeditationTimer extends React.Component {
 	when 2 or more Blue buttons are clicked.
 	*/
 	myCallback = (dataFromChild) => {
+		console.log("in myCallback()");
 		//if (this.state.isRunning === true) {
 			clearInterval(this.state.intervalId);
 			this.state.isRunning = true;
@@ -202,18 +203,28 @@ class MeditationTimer extends React.Component {
 						</Button>
 						
 					</Col>
-					<button 
-					type="button"
-					className={this.state.debugStyle}
-					onMouseOver={() => {
-						console.log("in onMouseOver");
-						this.setState({ debugStyle: "debugVisible"});
-					} }
-					onMouseOut={() => {
-						console.log("in onMouseOut");
-						this.setState({ debugStyle: "debugHidden"});
-					}}
-					>Test</button>
+				</Row>
+				<Row>
+					<Col md={{ span: 3, offset: 3 }}>
+						<div>
+							<button 
+							type="button"
+							className={this.state.debugStyle}
+							onMouseOver={() => {
+								console.log("in onMouseOver");
+								this.setState({ debugStyle: "debugVisible"});
+							} }
+							onMouseOut={() => {
+								console.log("in onMouseOut");
+								this.setState({ debugStyle: "debugHidden"});
+							}}
+							onClick={() => {
+								console.log("in onClick");
+								this.myCallback(.1);
+							}}
+							>Test</button>
+						</div>
+					</Col>
 				</Row>
 			</div>
 		);
