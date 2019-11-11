@@ -181,6 +181,13 @@ class MeditationTimer extends React.Component {
 	ml-4 and mr-5 are both on Play/Pause button.
 	other option:
 	Play/Pause ml-4, Reset mr-5
+	
+	Top row has 2 columns: 3 Blue buttons, 00:00 display.
+	Bottom row has 3 columns:
+	left column is padding 
+	center column holds Play/Pause and Reset buttons
+	right column holds hidden Test button.
+	'lg' means column width, 12 total columns in a row
 	*/
 	render() {		
 		return (
@@ -195,17 +202,24 @@ class MeditationTimer extends React.Component {
 					<Col>
 						<span id="displayBackground" className={this.state.displayStyle}>{this.state.timerString}</span>
 						<br/>
-						<Button variant="success ml-4 mr-5" onClick={this.playPause}>
-							Play/Pause
-						</Button>
-						<Button variant="danger" onClick={this.reset}>
-							Reset
-						</Button>
 						
 					</Col>
 				</Row>
 				<Row>
-					<Col md={{ span: 3, offset: 3 }}>
+					<Col lg={6}>
+					</Col>
+					<Col lg={5}>
+						<div className="mb-2">
+							<Button variant="success ml-4 mr-5" onClick={this.playPause}>
+								Play/Pause
+							</Button>
+							<Button variant="danger" onClick={this.reset}>
+								Reset
+							</Button>
+						</div>
+
+					</Col>
+					<Col lg={1}>
 						<div>
 							<button 
 							type="button"

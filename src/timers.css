@@ -37,30 +37,6 @@ Makes button hidden.
 	opacity: 0;
 }
 
-.testButton {
-	font-size: 10px;
-	height: 22px;
-	width: 33px;
-	position: absolute;
-	bottom: 2px;
-	right: 2px;
-	/*background-color: black;*/
-	display: none;
-}
-
-.testButton:hover {
-	font-size: 10px;
-	
-	height: 22px;
-	width: 33px;
-	position: absolute;
-	bottom: 2px;
-	right: 2px;
-	background-color: red;
-	display: inline;
-}
-
-
 /*
 border-radius makes red background
 have rounded corners
