@@ -201,10 +201,9 @@ class MeditationTimer extends React.Component {
 			<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
 				<Row>
 					<Col>
-
-						<TimerButton time="1" callbackFromParent={this.myCallback}/>
-						<TimerButton time="5" callbackFromParent={this.myCallback}/>
 						<TimerButton time="30" callbackFromParent={this.myCallback}/>
+						<TimerButton time="5" callbackFromParent={this.myCallback}/>
+						<TimerButton time="1" callbackFromParent={this.myCallback}/>
 					</Col>
 					<Col>
 						<span id="displayBackground" className={this.state.displayStyle}>{this.state.timerString}</span>
