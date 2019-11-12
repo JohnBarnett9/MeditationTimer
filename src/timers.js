@@ -125,10 +125,12 @@ class MeditationTimer extends React.Component {
 	the timer stays at 00:00.
 	If the reset button is clicked any other time, nothing happens.
 	=== true prevents NaN:NaN from appearing when click Reset 
-	when display is 00:00
+	when display is 00:00.
+	If click Reset when timer is finished and has red background,
+	|| === displayStyleR resets timer.
 	*/
 	reset(){
-		if (this.state.isRunning === true) {
+		if ((this.state.isRunning === true) || (this.state.displayStyle === "displayStyleR")) {
 			this.state.displayStyle = "displayStyleW";
 			clearInterval(this.state.intervalId);
 			//load amount from backup
