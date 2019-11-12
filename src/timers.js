@@ -43,6 +43,7 @@ class MeditationTimer extends React.Component {
 		this.reset = this.reset.bind(this);
 		this.convertTotalSecondsToTimerString = this.convertTotalSecondsToTimerString.bind(this);
 		//this.mouseOut = this.mouseOut.bind(this);
+		this.playSound = this.playSound.bind(this);
 	}
 
 	
@@ -73,6 +74,14 @@ class MeditationTimer extends React.Component {
 	}
 	
 	/*
+	Play alarm sound 4 times.
+	*/
+	playSound(){
+		var audio = new Audio("zen4.mp3");
+		audio.play();
+	}
+
+	/*
 	Given totalSeconds to count down from, countdown to 0 and update the display value.
 	Math.floor() is needed to handle case of 0 minutes.
 	totalSeconds - 1 happens before convertTotalSecondsToTimerString()
@@ -88,11 +97,7 @@ class MeditationTimer extends React.Component {
 				//console.dir(this.state.displayStyle.backgroundColor);
 				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
-				
-				var audio = new Audio("./Zen Buddhist Temple Bell-SoundBible.com-331362457.mp3");
-				for(var i = 0; i < 4; i++){
-					audio.play();
-				}				
+				this.playSound();
 			}
 			
 			this.convertTotalSecondsToTimerString(this.state.totalSeconds);			
