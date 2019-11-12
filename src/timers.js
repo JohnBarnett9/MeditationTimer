@@ -53,8 +53,8 @@ class MeditationTimer extends React.Component {
 	clearInterval() prevents countdown running twice as fast 
 	when 2 or more Blue buttons are clicked.
 	*/
-	myCallback = (dataFromChild) => {
-		console.log("in myCallback()");
+	startTimer = (dataFromChild) => {
+		console.log("in startTimer()");
 		//if (this.state.isRunning === true) {
 			clearInterval(this.state.intervalId);
 			this.state.isRunning = true;
@@ -201,9 +201,9 @@ class MeditationTimer extends React.Component {
 			<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
 				<Row>
 					<Col>
-						<TimerButton time="30" callbackFromParent={this.myCallback}/>
-						<TimerButton time="5" callbackFromParent={this.myCallback}/>
-						<TimerButton time="1" callbackFromParent={this.myCallback}/>
+						<TimerButton time="30" callbackFromParent={this.startTimer}/>
+						<TimerButton time="5" callbackFromParent={this.startTimer}/>
+						<TimerButton time="1" callbackFromParent={this.startTimer}/>
 					</Col>
 					<Col>
 						<span id="displayBackground" className={this.state.displayStyle}>{this.state.timerString}</span>
@@ -240,7 +240,7 @@ class MeditationTimer extends React.Component {
 							}}
 							onClick={() => {
 								console.log("in onClick");
-								this.myCallback(.1);
+								this.startTimer(.1);
 							}}
 							>Test</button>
 						</div>
