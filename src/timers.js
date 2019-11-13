@@ -24,17 +24,15 @@ class MeditationTimer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { 
-			timerString: "00:00",
-			minutes: 0, //not needed?
-			seconds: 0, //not needed?
-			started: false, //not needed?
-			intervalId: 0, //to exit setInterval()
-			totalSeconds: 0, //different amount depending on which button clicked
-			totalSecondesForReset: 0,
-			isRunning: false, //true if running, false if paused
-			displayStyle: "displayStyleW",
-			debugFlag: false, //flag determines which style to use
-			debugStyle: "debugHidden"
+			timerString: "00:00", /* minutes : seconds displayed to user */
+			minutes: 0, /* converted from totalSeconds, the minutes part of timerString */
+			seconds: 0, /* converted from totalSeconds, the seconds part of timerString */
+			intervalId: 0, /* to exit countdown timer when timer is 0 */
+			totalSeconds: 0, /* the timer is based on this number, -1 every second */
+			totalSecondesForReset: 0, /* used to reset display when Reset button clicked */
+			isRunning: false, /* true if timer counting down, false if paused or stopped */
+			displayStyle: "displayStyleW", /* CSS class display has white or red background */
+			debugStyle: "debugHidden" /* CSS, Test button is visible or not. */
 		};
 		//this.setState({displayStyle :  this.state.displayStyleW});
 		
