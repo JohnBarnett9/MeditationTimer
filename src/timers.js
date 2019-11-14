@@ -75,8 +75,7 @@ class MeditationTimer extends React.Component {
 	Play alarm sound 4 times.
 	*/
 	playSound(){
-		var audio = new Audio("zen4.mp3");
-		audio.play();
+		this.state.audio.play();
 	}
 
 	/*
@@ -87,6 +86,7 @@ class MeditationTimer extends React.Component {
 	totalSeconds - 1 happens before === 0 because prevents display from being negative.
 	*/
 	timer() {
+		let audio = document.getElementById("myAudio");
 		if (this.state.isRunning === true) { //if not paused
 			this.state.totalSeconds = this.state.totalSeconds - 1;
 			if (this.state.totalSeconds === 0) {
@@ -95,7 +95,7 @@ class MeditationTimer extends React.Component {
 				//console.dir(this.state.displayStyle.backgroundColor);
 				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
-				this.playSound();
+				audio.play();
 			}
 			
 			this.convertTotalSecondsToTimerString(this.state.totalSeconds);			
@@ -128,11 +128,15 @@ class MeditationTimer extends React.Component {
 	|| === displayStyleR resets timer.
 	*/
 	reset(){
+		let audio = document.getElementById("myAudio");
+
 		if ((this.state.isRunning === true) || (this.state.displayStyle === "displayStyleR")) {
 			this.state.displayStyle = "displayStyleW";
 			clearInterval(this.state.intervalId);
 			//load amount from backup
 			this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
+
+			audio.pause();
 		}
 	}
 
