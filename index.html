@@ -29,40 +29,42 @@
 
 	<div 
 	style="
-	width: 600px; 
-	height: 200px; 
+	width: 700px;
+	height: 400px;
 	overflow-y: scroll;
 	margin: 0 auto;">
-		Technologies Used
-		<br>
-		React 16
-		Webpack 4
-		Bootstrap 4
-		Babel 7
-		NPM 6
+		<h2 id="technologies-used">Technologies Used</h2>
+		<ul>
+		<li>React 16</li>
+		<li>Webpack 4</li>
+		<li>Bootstrap 4</li>
+		<li>Babel 7</li>
+		<li>NPM 6</li>
+		</ul>
+		<h2 id="interesting-technical-issues-i-ran-into">Interesting Technical Issues I Ran Into</h2>
+		<p><strong>React 16</strong><br>
+		I learned I needed React, ReactDOM, and Babel to be able to build and run a React program that includes JSX.</p>
+		<p><strong>npm 6 and package.json</strong><br>
+		To import npm modules such as react, I needed Webpack and Babel.<br>
+		This was because I needed to translate Common JS modules to<br>
+		ES6 modules.</p>
+		<p>I learned how to use package.json file to track versions<br>
+		of npm packages.</p>
+		<p><strong>Webpack 4</strong><br>
+		I configured a simple webpack.config.js file.<br>
+		I learned what these are: entry, output, module, rules.</p>
+		<p><strong>Babel 7</strong><br>
+		I configured babel with a babelrc file.<br>
+		The babelrc file uses react presets and I needed a special plugin to handle ES6 advanced callback syntax.</p>
+		<p><strong>react-bootstrap 4</strong><br>
+		I learned various ways to do CSS in React: class, className, style, and Grid.<br>
+		I learned that React uses camelCase instead of class-name.<br>
+		I learned how to import an external CSS file for use in React.</p>
+		<p><a href="TimerBlogPost">link to webpage with more complete explanation of<br>
+		what I did, problems I ran into<br>
+		</a></p>
 
-		Interesting Technical Issues I Ran Into
-		<br>
-		To use npm modules such as react, I needed Webpack and Babel.
-		This was because I needed to translate Common JS modules to 
-		ES6 modules.
 
-		I learned how to use package.json file to track versions 
-		of npm packages.
-		
-		I configured babel with a babelrc file.
-		The babelrc file uses react presets and I needed 
-		a special plugin to handle ES6 advanced callback syntax.
-		
-		I configured a simple webpack.config.js file.
-		I learned what these mean: entry, output, module, rules.
-		
-		I learned various ways to do CSS in React:
-		Learned that React uses camelCase instead of dash-thing.
-		
-		Learned how to import an external CSS file for use in React.
-		
-		setInterval(), clearInterval()
 	</div>
 
 	<audio id="myAudio">
