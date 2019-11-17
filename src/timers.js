@@ -12,10 +12,14 @@ import './timers.css';
 const e = React.createElement;
 
 /*
-Contains 1 minute button,
-5 minute button,
+Contains
 30 minute button,
-and the Display of the Timer.
+5 minute button,
+1 minute button,
+the display of the timer,
+Play/Pause Button,
+Reset button,
+Test button appears on hover 6 seconds.
 
 In constructor, .bind() is to keep the value of 'this' in the function 
 be MeditationTimer object instead of undefined or window.
@@ -23,7 +27,6 @@ be MeditationTimer object instead of undefined or window.
 class MeditationTimer extends React.Component {
 	constructor(props) {
 		super(props);
-		//let aud = document.getElementById("myAudio");
 		this.state = { 
 			timerString: "00:00", /* minutes : seconds displayed to user */
 			minutes: 0, /* converted from totalSeconds, the minutes part of timerString */
@@ -46,41 +49,44 @@ class MeditationTimer extends React.Component {
 	/*
 	clearInterval() prevents countdown running twice as fast 
 	when 2 or more Blue buttons are clicked.
+	isRunning true because timer not paused and not stopped.
+	initialize totalseconds
+	displayStyle set background style and color of display
+	start Interval
+	convertTotalSecondsToTimerString() display timer immediately
+	save intervalId to be used in clearInterval()
+	if reset is clicked, need a backup of the original amount of seconds
 	*/
 	startTimer = (dataFromChild) => {
 		clearInterval(this.state.intervalId);
 		this.state.isRunning = true;
 		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
-		
-		//set background style and color of display 
 		this.state.displayStyle = "displayStyleW";
-		
 		let intervalId = setInterval(this.timer, 1000);
-		//1 min clicked, display initialized immediately
 		this.convertTotalSecondsToTimerString(this.state.totalSeconds);
 		this.setState({intervalId: intervalId });
-		
-		//if reset is clicked, need a backup of the original amount of seconds
 		this.state.totalSecondsForReset = this.state.totalSeconds;
 	}
 
 	/*
 	Given totalSeconds to count down from, countdown to 0 and update the display value.
+	isRunning === true, happens when timer not paused.
 	Math.floor() is needed to handle case of 0 minutes.
 	totalSeconds - 1 happens before convertTotalSecondsToTimerString()
 	because solves problem of: click 1 Min, 6:00 appears 2 seconds before counting down.
 	totalSeconds - 1 happens before === 0 because prevents display from being negative.
+	isRunning = false, set color to red.
+	play(), gong sound happens 4 times.
 	*/
 	timer() {
-		if (this.state.isRunning === true) { //if not paused
+		if (this.state.isRunning === true) {
 			this.state.totalSeconds = this.state.totalSeconds - 1;
 			if (this.state.totalSeconds === 0) {
 				this.state.displayStyle = "displayStyleR";
-				this.state.isRunning = false; //used to set color to red
+				this.state.isRunning = false;
 				clearInterval(this.state.intervalId);
 				this.state.audio.play();
 			}
-			
 			this.convertTotalSecondsToTimerString(this.state.totalSeconds);			
 		}
 	}
@@ -108,14 +114,13 @@ class MeditationTimer extends React.Component {
 	when display is 00:00.
 	If click Reset when timer is finished and has red background,
 	|| === displayStyleR resets timer.
+	convertTotalSecondsToTimerString(), load amount from backup.
 	*/
 	reset(){
 		if ((this.state.isRunning === true) || (this.state.displayStyle === "displayStyleR")) {
 			this.state.displayStyle = "displayStyleW";
 			clearInterval(this.state.intervalId);
-			//load amount from backup
 			this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
-
 			this.state.audio.pause();
 		}
 	}
@@ -125,18 +130,18 @@ class MeditationTimer extends React.Component {
 	input is an amount of seconds.
 	output is the input has been converted to the format of the 
 	timerString "00:00".
+	minutes < 10, handle case of leading 0
+	seconds < 10, handle case of leading 0
 	*/
 	convertTotalSecondsToTimerString(amountOfSeconds){
 		let minutes = Math.floor(amountOfSeconds / 60);
-		
-		//handle case of leading 0
+
 		if (minutes < 10) {
 			minutes = "0" + minutes;
 		}
 		
 		let seconds = amountOfSeconds % 60;
 		
-		//handle case of leading 0
 		if (seconds < 10) {
 			seconds = "0" + seconds;
 		}
@@ -226,6 +231,7 @@ class MeditationTimer extends React.Component {
 
 /*
 TimerStart is a button to set a timer.
+Bootstrap used with variant, to set color, margin bottom, margin bottom.
 */
 class TimerButton extends React.Component {
 	constructor(props) {
