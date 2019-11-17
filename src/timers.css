@@ -38,6 +38,15 @@ Makes button hidden.
 }
 
 /*
+Author is aligned to the right.
+*/
+.authorStyle {
+	text-align: right;
+	font-family: "Times New Roman";
+}
+
+
+/*
 border-radius makes red background
 have rounded corners
 */

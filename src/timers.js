@@ -202,54 +202,57 @@ class MeditationTimer extends React.Component {
 	*/
 	render() {		
 		return (
-			<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
-				<Row>
-					<Col>
-						<TimerButton time="30" callbackFromParent={this.startTimer}/>
-						<TimerButton time="5" callbackFromParent={this.startTimer}/>
-						<TimerButton time="1" callbackFromParent={this.startTimer}/>
-					</Col>
-					<Col>
-						<span id="displayBackground" className={this.state.displayStyle}>{this.state.timerString}</span>
-						<br/>
-						
-					</Col>
-				</Row>
-				<Row>
-					<Col lg={6}>
-					</Col>
-					<Col lg={5}>
-						<div className="mb-2">
-							<Button variant="success ml-4 mr-5" onClick={this.playPause}>
-								Play/Pause
-							</Button>
-							<Button variant="danger" onClick={this.reset}>
-								Reset
-							</Button>
-						</div>
-
-					</Col>
-					<Col lg={1}>
-						<div>
-							<button 
-							type="button"
-							className={this.state.debugStyle}
-							onMouseOver={() => {
-								console.log("in onMouseOver");
-								this.setState({ debugStyle: "debugVisible"});
-							} }
-							onMouseOut={() => {
-								console.log("in onMouseOut");
-								this.setState({ debugStyle: "debugHidden"});
-							}}
-							onClick={() => {
-								console.log("in onClick");
-								this.startTimer(.1);
-							}}
-							>Test</button>
-						</div>
-					</Col>
-				</Row>
+			<div>
+				<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
+					<Row>
+						<Col>
+							<TimerButton time="30" callbackFromParent={this.startTimer}/>
+							<TimerButton time="5" callbackFromParent={this.startTimer}/>
+							<TimerButton time="1" callbackFromParent={this.startTimer}/>
+						</Col>
+						<Col>
+							<span id="displayBackground" className={this.state.displayStyle}>{this.state.timerString}</span>
+							<br/>
+						</Col>
+					</Row>
+					<Row>
+						<Col lg={6}>
+						</Col>
+						<Col lg={5}>
+							<div className="mb-2">
+								<Button variant="success ml-4 mr-5" onClick={this.playPause}>
+									Play/Pause
+								</Button>
+								<Button variant="danger" onClick={this.reset}>
+									Reset
+								</Button>
+							</div>
+						</Col>
+						<Col lg={1}>
+							<div>
+								<button
+								type="button"
+								className={this.state.debugStyle}
+								onMouseOver={() => {
+									console.log("in onMouseOver");
+									this.setState({ debugStyle: "debugVisible"});
+								} }
+								onMouseOut={() => {
+									console.log("in onMouseOut");
+									this.setState({ debugStyle: "debugHidden"});
+								}}
+								onClick={() => {
+									console.log("in onClick");
+									this.startTimer(.1);
+								}}
+								>Test</button>
+							</div>
+						</Col>
+					</Row>
+				</div>
+					<div class="container authorStyle">
+					Author: John Barnett
+				</div>
 			</div>
 		);
 	}
