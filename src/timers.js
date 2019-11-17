@@ -41,7 +41,6 @@ class MeditationTimer extends React.Component {
 		this.timer = this.timer.bind(this);
 		this.reset = this.reset.bind(this);
 		this.convertTotalSecondsToTimerString = this.convertTotalSecondsToTimerString.bind(this);
-		this.playSound = this.playSound.bind(this);
 	}
 
 	/*
@@ -63,13 +62,6 @@ class MeditationTimer extends React.Component {
 		
 		//if reset is clicked, need a backup of the original amount of seconds
 		this.state.totalSecondsForReset = this.state.totalSeconds;
-	}
-	
-	/*
-	Play alarm sound 4 times.
-	*/
-	playSound(){
-		this.state.audio.play();
 	}
 
 	/*
