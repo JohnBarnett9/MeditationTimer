@@ -36,29 +36,21 @@ class MeditationTimer extends React.Component {
 			debugStyle: "debugHidden", /* CSS, Test button is visible or not. */
 			audio: document.getElementById("myAudio")
 		};
-		//this.setState({displayStyle :  this.state.displayStyleW});
-		
+
 		this.playPause = this.playPause.bind(this);
 		this.timer = this.timer.bind(this);
 		this.reset = this.reset.bind(this);
 		this.convertTotalSecondsToTimerString = this.convertTotalSecondsToTimerString.bind(this);
-		//this.mouseOut = this.mouseOut.bind(this);
 		this.playSound = this.playSound.bind(this);
 	}
 
-	
-	
-	
 	/*
 	clearInterval() prevents countdown running twice as fast 
 	when 2 or more Blue buttons are clicked.
 	*/
 	startTimer = (dataFromChild) => {
-		console.log("in startTimer()");
-		//if (this.state.isRunning === true) {
-			clearInterval(this.state.intervalId);
-			this.state.isRunning = true;
-		//}
+		clearInterval(this.state.intervalId);
+		this.state.isRunning = true;
 		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
 		
 		//set background style and color of display 
@@ -88,13 +80,10 @@ class MeditationTimer extends React.Component {
 	totalSeconds - 1 happens before === 0 because prevents display from being negative.
 	*/
 	timer() {
-		//let audio = document.getElementById("myAudio");
 		if (this.state.isRunning === true) { //if not paused
 			this.state.totalSeconds = this.state.totalSeconds - 1;
 			if (this.state.totalSeconds === 0) {
 				this.state.displayStyle = "displayStyleR";
-				//console.log("in timer this.state.displayStyle.backgroundColor = ");
-				//console.dir(this.state.displayStyle.backgroundColor);
 				this.state.isRunning = false; //used to set color to red
 				clearInterval(this.state.intervalId);
 				this.state.audio.play();
@@ -109,7 +98,6 @@ class MeditationTimer extends React.Component {
 	If timer is paused, continues timer counting down.
 	*/
 	playPause(){
-		console.log("in play pause");
 		if (this.state.isRunning === true) {
 			this.state.isRunning = false;
 		} else {
@@ -130,8 +118,6 @@ class MeditationTimer extends React.Component {
 	|| === displayStyleR resets timer.
 	*/
 	reset(){
-		//let audio = document.getElementById("myAudio");
-
 		if ((this.state.isRunning === true) || (this.state.displayStyle === "displayStyleR")) {
 			this.state.displayStyle = "displayStyleW";
 			clearInterval(this.state.intervalId);
@@ -164,18 +150,9 @@ class MeditationTimer extends React.Component {
 		}
 		
 		let display = minutes + ":" + seconds;
-		console.log("display = " + display);
 		this.setState({ timerString: minutes + ":" + seconds });
 	}
-	
-	/*
-	mouseOut(){
-		console.log("in mouseOut()");
-		this.setState({debugStyle: "debugVisible"});
-	}
-	*/
-	
-	
+
 	/*
 	Renders the 1 minute button and the display of the timer.
 	Need closing <br/>, <br> will not work.
@@ -234,15 +211,12 @@ class MeditationTimer extends React.Component {
 								type="button"
 								className={this.state.debugStyle}
 								onMouseOver={() => {
-									console.log("in onMouseOver");
 									this.setState({ debugStyle: "debugVisible"});
 								} }
 								onMouseOut={() => {
-									console.log("in onMouseOut");
 									this.setState({ debugStyle: "debugHidden"});
 								}}
 								onClick={() => {
-									console.log("in onClick");
 									this.startTimer(.1);
 								}}
 								>Test</button>
@@ -269,8 +243,6 @@ class TimerButton extends React.Component {
 	}
 	
 	runTimer(event){
-		console.log("event=");
-		console.dir(event.target);
 		this.props.callbackFromParent(this.props.time);
 	}
 
