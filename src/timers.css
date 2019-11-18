@@ -45,6 +45,22 @@ Author is aligned to the right.
 	font-family: "Times New Roman";
 }
 
+/*
+The container for react-bootstrap.
+*/
+.bootstrapContainer {
+	border-style: solid;
+	border-width: 1px;
+}
+
+/*
+Style of the blue Timer Buttons.
+*/
+.timerButtonStyle {
+	width: 100px;
+	margin-left: 210px;
+}
+
 
 /*
 border-radius makes red background

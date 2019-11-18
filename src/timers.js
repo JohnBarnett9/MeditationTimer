@@ -177,7 +177,7 @@ class MeditationTimer extends React.Component {
 	render() {		
 		return (
 			<div>
-				<div class="container" style={{borderStyle:"solid",borderWidth:"1px"}}>
+				<div className="container bootstrapContainer">
 					<Row>
 						<Col>
 							<TimerButton time="30" callbackFromParent={this.startTimer}/>
@@ -221,7 +221,7 @@ class MeditationTimer extends React.Component {
 						</Col>
 					</Row>
 				</div>
-					<div class="container authorStyle">
+					<div className="container authorStyle">
 					Author: John Barnett
 				</div>
 			</div>
@@ -250,13 +250,9 @@ class TimerButton extends React.Component {
 	marginLeft is to have same whitespace distance on both sides of display.
 	*/
 	render () {
-		const buttonWidth = {
-			width: "100px",
-			marginLeft: "210px"
-		};
 		return (
 			<div>
-				<Button variant="primary mb-2 mt-2" style={buttonWidth} onClick={this.runTimer}>{this.props.time} Min</Button>
+				<Button variant="primary mb-2 mt-2" className="timerButtonStyle" onClick={this.runTimer}>{this.props.time} Min</Button>
 			</div>
 		);
 	}
