@@ -37,7 +37,7 @@ class MeditationTimer extends React.Component {
 			isRunning: false, /* true if timer counting down, false if paused or stopped */
 			displayStyle: "displayStyleW", /* CSS class display has white or red background */
 			debugStyle: "debugHidden", /* CSS, Test button is visible or not. */
-			audio: document.getElementById("myAudio")
+			audio: document.getElementById("myAudio") /* gong sound happens when timer is 0 */
 		};
 
 		this.playPause = this.playPause.bind(this);
