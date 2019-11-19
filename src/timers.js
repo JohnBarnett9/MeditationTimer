@@ -27,17 +27,23 @@ be MeditationTimer object instead of undefined or window.
 class MeditationTimer extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.intervalId = 0; /* to exit countdown timer when timer is 0 */
+		this.totalSeconds = 0; /* the timer is based on this number, -1 every second */
+		this.totalSecondsForReset = 0; /* used to reset display when Reset button clicked */
+		this.isRunning = false; /* true if timer counting down, false if paused or stopped */
+		this.isCompleted = false; /* timer has completed, red background */
+		this.audio = document.getElementById("myAudio"); /* gong sound happens when timer is 0 */
+
+		/*
+		Any variable in this.state has this property:
+		when the variable changes value in the program,
+		the render that includes that variable will rerender.
+		*/
 		this.state = { 
 			timerString: "00:00", /* minutes : seconds displayed to user */
-			minutes: 0, /* converted from totalSeconds, the minutes part of timerString */
-			seconds: 0, /* converted from totalSeconds, the seconds part of timerString */
-			intervalId: 0, /* to exit countdown timer when timer is 0 */
-			totalSeconds: 0, /* the timer is based on this number, -1 every second */
-			totalSecondesForReset: 0, /* used to reset display when Reset button clicked */
-			isRunning: false, /* true if timer counting down, false if paused or stopped */
 			displayStyle: "displayStyleW", /* CSS class display has white or red background */
-			debugStyle: "debugHidden", /* CSS, Test button is visible or not. */
-			audio: document.getElementById("myAudio") /* gong sound happens when timer is 0 */
+			debugStyle: "debugHidden" /* CSS, Test button is visible or not. */
 		};
 
 		this.playPause = this.playPause.bind(this);
@@ -58,14 +64,18 @@ class MeditationTimer extends React.Component {
 	if reset is clicked, need a backup of the original amount of seconds
 	*/
 	startTimer = (dataFromChild) => {
-		clearInterval(this.state.intervalId);
-		this.state.isRunning = true;
-		this.state.totalSeconds = dataFromChild * 60; //1 or 5 or 30
-		this.state.displayStyle = "displayStyleW";
-		let intervalId = setInterval(this.timer, 1000);
-		this.convertTotalSecondsToTimerString(this.state.totalSeconds);
-		this.setState({intervalId: intervalId });
-		this.state.totalSecondsForReset = this.state.totalSeconds;
+		clearInterval(this.intervalId);
+
+		let secs = dataFromChild * 60;
+
+		this.isRunning = true;
+		this.totalSeconds = secs; //1 or 5 or 30
+		this.totalSecondsForReset = secs;
+
+		this.setState({ displayStyle: "displayStyleW" });
+		this.convertTotalSecondsToTimerString(this.totalSeconds);
+		let intervalid = setInterval(this.timer, 1000);
+		this.intervalId = intervalid;
 	}
 
 	/*
@@ -79,15 +89,16 @@ class MeditationTimer extends React.Component {
 	play(), gong sound happens 4 times.
 	*/
 	timer() {
-		if (this.state.isRunning === true) {
-			this.state.totalSeconds = this.state.totalSeconds - 1;
-			if (this.state.totalSeconds === 0) {
+		if (this.isRunning === true) {
+			this.totalSeconds = this.totalSeconds - 1;
+			if (this.totalSeconds === 0) {
 				this.state.displayStyle = "displayStyleR";
-				this.state.isRunning = false;
-				clearInterval(this.state.intervalId);
-				this.state.audio.play();
+				this.isRunning = false;
+				clearInterval(this.intervalId);
+				this.audio.play();
+				this.isCompleted = true;
 			}
-			this.convertTotalSecondsToTimerString(this.state.totalSeconds);			
+			this.convertTotalSecondsToTimerString(this.totalSeconds);
 		}
 	}
 
@@ -96,10 +107,10 @@ class MeditationTimer extends React.Component {
 	If timer is paused, continues timer counting down.
 	*/
 	playPause(){
-		if (this.state.isRunning === true) {
-			this.state.isRunning = false;
+		if (this.isRunning === true) {
+			this.isRunning = false;
 		} else {
-			this.state.isRunning = true;
+			this.isRunning = true;
 		}
 	}
 	
@@ -115,14 +126,29 @@ class MeditationTimer extends React.Component {
 	If click Reset when timer is finished and has red background,
 	|| === displayStyleR resets timer.
 	convertTotalSecondsToTimerString(), load amount from backup.
+
+	1st if, no timer has been started.
+	2nd if, timer is done and at 0.
+	3rd if, timer is counting down.
+	last 2 lines, Reset clicked while timer is paused.
 	*/
 	reset(){
-		if ((this.state.isRunning === true) || (this.state.displayStyle === "displayStyleR")) {
-			this.state.displayStyle = "displayStyleW";
-			clearInterval(this.state.intervalId);
-			this.convertTotalSecondsToTimerString(this.state.totalSecondsForReset);
-			this.state.audio.pause();
+		if (this.totalSecondsForReset === 0) { //initial state
+			console.log("1st if");
+			return;
 		}
+		if (this.isCompleted === true) {
+			this.state.displayStyle = "displayStyleW";
+			this.convertTotalSecondsToTimerString(this.totalSecondsForReset);
+			this.audio.pause();
+			return;
+		}
+		if (this.isRunning === true) {
+			this.isRunning = false;
+			this.convertTotalSecondsToTimerString(this.totalSecondsForReset);
+		}
+		clearInterval(this.intervalId);
+		this.convertTotalSecondsToTimerString(this.totalSecondsForReset);
 	}
 
 	
