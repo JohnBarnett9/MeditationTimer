@@ -20,9 +20,6 @@ the display of the timer,
 Play/Pause Button,
 Reset button,
 Test button appears on hover 6 seconds.
-
-In constructor, .bind() is to keep the value of 'this' in the function 
-be MeditationTimer object instead of undefined or window.
 */
 class MeditationTimer extends React.Component {
 	constructor(props) {
@@ -35,11 +32,6 @@ class MeditationTimer extends React.Component {
 		this.isCompleted = false; /* timer has completed, red background */
 		this.audio = document.getElementById("myAudio"); /* gong sound happens when timer is 0 */
 
-		/*
-		Any variable in this.state has this property:
-		when the variable changes value in the program,
-		the render that includes that variable will rerender.
-		*/
 		this.state = { 
 			timerString: "00:00", /* minutes : seconds displayed to user */
 			displayStyle: "displayStyleW", /* CSS class display has white or red background */
@@ -53,15 +45,7 @@ class MeditationTimer extends React.Component {
 	}
 
 	/*
-	clearInterval() prevents countdown running twice as fast 
-	when 2 or more Blue buttons are clicked.
-	isRunning true because timer not paused and not stopped.
-	initialize totalseconds
-	displayStyle set background style and color of display
-	start Interval
-	convertTotalSecondsToTimerString() display timer immediately
-	save intervalId to be used in clearInterval()
-	if reset is clicked, need a backup of the original amount of seconds
+	Called when blue timer button is clicked.
 	*/
 	startTimer = (dataFromChild) => {
 		clearInterval(this.intervalId);
@@ -79,14 +63,8 @@ class MeditationTimer extends React.Component {
 	}
 
 	/*
-	Given totalSeconds to count down from, countdown to 0 and update the display value.
-	isRunning === true, happens when timer not paused.
-	Math.floor() is needed to handle case of 0 minutes.
-	totalSeconds - 1 happens before convertTotalSecondsToTimerString()
-	because solves problem of: click 1 Min, 6:00 appears 2 seconds before counting down.
-	totalSeconds - 1 happens before === 0 because prevents display from being negative.
-	isRunning = false, set color to red.
-	play(), gong sound happens 4 times.
+	When a countdown timer has started,
+	this function is called every second.
 	*/
 	timer() {
 		if (this.isRunning === true) {
@@ -103,8 +81,8 @@ class MeditationTimer extends React.Component {
 	}
 
 	/*
-	If timer is counting down, pauses timer.
-	If timer is paused, continues timer counting down.
+	Called when Play/Pause button clicked.
+	Plays or Pauses countdown timer.
 	*/
 	playPause(){
 		if (this.isRunning === true) {
@@ -115,22 +93,9 @@ class MeditationTimer extends React.Component {
 	}
 	
 	/*
-	When reset button is clicked while timer 
-	is counting down or while timer is paused,
-	timer is set back to original time and does not count down.
-	If the reset button is clicked with timer is 00:00,
-	the timer stays at 00:00.
-	If the reset button is clicked any other time, nothing happens.
-	=== true prevents NaN:NaN from appearing when click Reset 
-	when display is 00:00.
-	If click Reset when timer is finished and has red background,
-	|| === displayStyleR resets timer.
-	convertTotalSecondsToTimerString(), load amount from backup.
-
-	1st if, no timer has been started.
-	2nd if, timer is done and at 0.
-	3rd if, timer is counting down.
-	last 2 lines, Reset clicked while timer is paused.
+	Called when Reset button is clicked.
+	Timer display is set to white background and 
+	original time is displayed.
 	*/
 	reset(){
 		if (this.totalSecondsForReset === 0) { //initial state
@@ -153,11 +118,9 @@ class MeditationTimer extends React.Component {
 
 	
 	/*
-	input is an amount of seconds.
-	output is the input has been converted to the format of the 
-	timerString "00:00".
-	minutes < 10, handle case of leading 0
-	seconds < 10, handle case of leading 0
+	When a countdown timer has started,
+	the total seconds remaining of the timer is converted 
+	to minutes:seconds format with leading zeros.
 	*/
 	convertTotalSecondsToTimerString(amountOfSeconds){
 		let minutes = Math.floor(amountOfSeconds / 60);
@@ -177,28 +140,10 @@ class MeditationTimer extends React.Component {
 	}
 
 	/*
-	Renders the 1 minute button and the display of the timer.
-	Need closing <br/>, <br> will not work.
-	xs=3, left column takes up 3 of 12 columns
-	xs=9, right column takes up 9 of 12 columns
-	xs, sm, md, lg are the 4 possible screen sizes
-	
-	With red, the totalSeconds === 0 is to detect when the
-	timer has reached 0.
-	The isRunning === false is to make the background red only
-	when the timer has reached 0, and not when the display is 0
-	before any timers have been started.
-
-	ml-4 and mr-5 are both on Play/Pause button.
-	other option:
-	Play/Pause ml-4, Reset mr-5
-	
-	Top row has 2 columns: 3 Blue buttons, 00:00 display.
-	Bottom row has 3 columns:
-	left column is padding 
-	center column holds Play/Pause and Reset buttons
-	right column holds hidden Test button.
-	'lg' means column width, 12 total columns in a row
+	Renders the User Interface that inclues 
+	3 blue timer buttons, the display of time remaining,
+	the Play/Pause button, the Reset button,
+	and Author.
 	*/
 	render() {		
 		return (
@@ -257,7 +202,6 @@ class MeditationTimer extends React.Component {
 
 /*
 TimerStart is a button to set a timer.
-Bootstrap used with variant, to set color, margin bottom, margin bottom.
 */
 class TimerButton extends React.Component {
 	constructor(props) {
@@ -266,14 +210,15 @@ class TimerButton extends React.Component {
 		this.runTimer = this.runTimer.bind(this);
 	}
 	
+	/*
+	Called when blue timer button is clicked.
+	Starts countdown timer.
+	*/
 	runTimer(event){
 		this.props.callbackFromParent(this.props.time);
 	}
 
 	/*
-	{ this.props.numberOfSeconds }
-	primary mb-2 mt-2, primary means blue, 2 means margin top and bottom
-	marginLeft is to have same whitespace distance on both sides of display.
 	*/
 	render () {
 		return (
