@@ -219,6 +219,8 @@ class TimerButton extends React.Component {
 	}
 
 	/*
+	Renders a blue timer button.
+	Uses react-bootstrap Button component.
 	*/
 	render () {
 		return (
